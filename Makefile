@@ -8,7 +8,6 @@ build:
 run: build
 	docker run -ti --privileged -v /sys/fs/cgroup:/sys/fs/cgroup -v /run -p 80 tfoldi/tableau-server:release
 
-
 clean:
 	docker system prune
 	

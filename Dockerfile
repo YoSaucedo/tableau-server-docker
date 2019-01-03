@@ -7,11 +7,11 @@ FROM centos/systemd
 MAINTAINER "Tamas Foldi" <tfoldi@starschema.net>
 
 # this is the version what we're building
-ENV TABLEAU_VERSION="2018.2.2" \
+ENV TABLEAU_VERSION="2018.2.4" \
     LANG=en_US.UTF-8
 
 # make systemd dbus visible 
-VOLUME /sys/fs/cgroup /run /tmp
+VOLUME /sys/fs/cgroup /run /tmp /var/opt/tableau
 
 COPY config/lscpu /bin
 
@@ -27,6 +27,7 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
              "https://downloads.tableau.com/drivers/linux/yum/tableau-driver/tableau-postgresql-odbc-9.5.3-1.x86_64.rpm"  && \
     rm -rf /var/tmp/yum-* 
 
+RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
 
 COPY config/* /opt/tableau/docker_build/
 
